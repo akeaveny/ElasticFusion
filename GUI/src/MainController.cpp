@@ -34,7 +34,9 @@ MainController::MainController(int argc, char * argv[])
     std::string calibrationFile;
     Parse::get().arg(argc, argv, "-cal", calibrationFile);
 
-    Resolution::getInstance(640, 480);
+    // Resolution::getInstance(640, 480);
+    Resolution::getInstance(672, 376);
+    // Resolution::getInstance(1280, 720);
 
     if(calibrationFile.length())
     {
@@ -42,7 +44,9 @@ MainController::MainController(int argc, char * argv[])
     }
     else
     {
-        Intrinsics::getInstance(528, 528, 320, 240);
+        // Intrinsics::getInstance(528, 528, 320, 240);
+        Intrinsics::getInstance(339, 339, 343, 177);
+        // Intrinsics::getInstance(697, 697, 630, 354);
     }
 
     Parse::get().arg(argc, argv, "-l", logFile);
@@ -67,6 +71,17 @@ MainController::MainController(int argc, char * argv[])
           good = ((LiveLogReader *)logReader)->cam->ok();
         }
 #endif
+
+
+#ifdef WITH_ZED
+        if(!good)
+        {
+          delete logReader;
+          logReader = new LiveLogReader(logFile, flipColors, LiveLogReader::CameraType::Zed);        
+          good = ((LiveLogReader *)logReader)->cam->ok();      
+        }
+#endif
+
     }
 
     if(Parse::get().arg(argc, argv, "-p", poseFile) > 0)

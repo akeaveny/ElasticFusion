@@ -20,6 +20,7 @@
 
 #include "OpenNI2Interface.h"
 #include "RealSenseInterface.h"
+#include "ZedInterface.h"
 
 LiveLogReader::LiveLogReader(std::string file, bool flipColors, CameraType type)
  : LogReader(file, flipColors),
@@ -32,6 +33,9 @@ LiveLogReader::LiveLogReader(std::string file, bool flipColors, CameraType type)
       cam = new OpenNI2Interface(Resolution::getInstance().width(),Resolution::getInstance().height());
     else if(type == CameraType::RealSense)
       cam = new RealSenseInterface(Resolution::getInstance().width(), Resolution::getInstance().height());
+    else if(type == CameraType::Zed) 
+      cam = new ZedInterface(672, 376);
+    //   cam = new ZedInterface(1280, 720);
     else
       cam = nullptr;
 

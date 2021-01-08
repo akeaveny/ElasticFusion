@@ -146,6 +146,7 @@ class GUI
             drawWindow = new pangolin::Var<bool>("ui.Draw time window", false, true);
             drawNormals = new pangolin::Var<bool>("ui.Draw normals", false, true);
             drawTimes = new pangolin::Var<bool>("ui.Draw times", false, true);
+            drawClasses = new pangolin::Var<bool>("ui.Draw classes", false, true);
             drawDefGraph = new pangolin::Var<bool>("ui.Draw deformation graph", false, true);
             drawFerns = new pangolin::Var<bool>("ui.Draw ferns", false, true);
             drawDeforms = new pangolin::Var<bool>("ui.Draw deformations", true, true);
@@ -193,6 +194,7 @@ class GUI
             delete depthCutoff;
             delete logProgress;
             delete drawTimes;
+            delete drawClasses;
             delete drawFxaa;
             delete fastOdom;
             delete icpWeight;
@@ -309,7 +311,7 @@ class GUI
 
             colorProgram->setUniform(Uniform("signMult", invertNormals ? 1.0f : -1.0f));
 
-            colorProgram->setUniform(Uniform("colorType", (drawNormals->Get() ? 1 : drawColors->Get() ? 2 : drawTimes->Get() ? 3 : 0)));
+            colorProgram->setUniform(Uniform("colorType", (drawNormals->Get() ? 1 : drawColors->Get() ? 2 : drawTimes->Get() ? 3 : drawClasses->Get() ? 4 : 0)));
 
             colorProgram->setUniform(Uniform("unstable", drawUnstable->Get()));
 
@@ -401,6 +403,7 @@ class GUI
                             * drawUnstable,
                             * drawPoints,
                             * drawTimes,
+                            * drawClasses,
                             * drawFerns,
                             * drawDeforms,
                             * drawWindow;
